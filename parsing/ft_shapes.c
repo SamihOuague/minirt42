@@ -6,7 +6,7 @@
 /*   By: souaguen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 04:51:39 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/09 22:18:15 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:40:51 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	ft_shapes_alloc(void **object, t_shape **shape, unsigned int obj_size)
 	}
 }
 
-void	ft_shape_init(t_shape **shape, void *obj, t_vec3 color, void (f)(t_shape **))
+void	ft_shape_init(t_shape **shape, void *obj,
+		t_vec3 color, void (f)(t_shape **))
 {
 	(**shape).object = obj;
 	(**shape).color = color;
@@ -43,11 +44,12 @@ t_shape	*ft_create_sphere(t_vec3 origin, double radius, t_vec3 color)
 	return (shape);
 }
 
-t_shape	*ft_create_cylinder(t_vec3 base, t_vec3 axis, double size[2], t_vec3 color)
+t_shape	*ft_create_cylinder(t_vec3 base, t_vec3 axis,
+		double size[2], t_vec3 color)
 {
 	t_cylinder	*cylinder;
 	t_shape		*shape;
-	
+
 	ft_shapes_alloc((void **)&cylinder, &shape, sizeof(t_cylinder));
 	if (cylinder == NULL || shape == NULL)
 		return (NULL);

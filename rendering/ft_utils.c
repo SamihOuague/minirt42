@@ -6,7 +6,7 @@
 /*   By: souaguen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 01:07:17 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/10 23:52:49 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:24:29 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@ t_vec3	ft_sub(t_vec3 a, t_vec3 b)
 	return (a);
 }
 
-t_vec3  ft_product(t_vec3 a, double n)
+t_vec3	ft_product(t_vec3 a, double n)
 {
-        a.x *= n;
-        a.y *= n;
-        a.z *= n;
-        return (a);
+	a.x *= n;
+	a.y *= n;
+	a.z *= n;
+	return (a);
 }
 
-t_vec3  ft_normalize(t_vec3 v)
+t_vec3	ft_normalize(t_vec3 v)
 {
-        float   nbr;
+	float	nbr;
 
-        nbr = fabs(ft_dot(v, v));
-        return (ft_product(v, 1 / sqrt(nbr)));
+	nbr = fabs(ft_dot(v, v));
+	return (ft_product(v, 1 / sqrt(nbr)));
 }
 
 t_vec3	ft_vec3(double x, double y, double z)

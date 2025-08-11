@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:32:35 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/10 20:07:32 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:32:11 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ int	ft_plan_checker(char **split)
 	return (0);
 }
 
-int	ft_plan_parse(char **a, char **p, char ** c, t_scene *sc)
+int	ft_plan_parse(char **a, char **p, char **c, t_scene *sc)
 {
 	t_vec3	axis;
 	t_vec3	point;
 	t_vec3	color;
-	int	error;
+	int		error;
 
 	error = 0;
 	if (ft_coords_float_checker(a)
-			|| ft_color_checker(c)
-			|| ft_coords_float_checker(p))
+		|| ft_color_checker(c)
+		|| ft_coords_float_checker(p))
 		error = 4;
 	if (!error)
 	{
@@ -61,7 +61,7 @@ int	ft_init_plan(char **split, t_scene *scene)
 	char	**axis;
 	char	**point;
 	char	**color;
-	int	error;
+	int		error;
 
 	if (ft_len(split) != 4 || ft_plan_checker(split))
 		return (2);
@@ -69,11 +69,11 @@ int	ft_init_plan(char **split, t_scene *scene)
 	point = ft_fast_split(ft_to_space(split[1]));
 	color = ft_fast_split(ft_to_space(split[3]));
 	if (axis == NULL
-			|| point == NULL
-			|| color == NULL
-			|| ft_len(axis) != 3
-			|| ft_len(point) != 3
-			|| ft_len(color) != 3)
+		|| point == NULL
+		|| color == NULL
+		|| ft_len(axis) != 3
+		|| ft_len(point) != 3
+		|| ft_len(color) != 3)
 	{
 		error = 2;
 		if (axis == NULL || point == NULL || color == NULL)
@@ -85,4 +85,3 @@ int	ft_init_plan(char **split, t_scene *scene)
 	}
 	return (ft_plan_parse(axis, point, color, scene));
 }
-

@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 04:05:40 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 00:02:29 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:39:45 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ int	ft_color_checker(char **color)
 	i = 0;
 	while (color[i] != NULL)
 	{
-
 		if (!ft_isnumeric(color[i])
-				|| ft_atoi(color[i]) > 255)
+			|| ft_atoi(color[i]) > 255)
 			return (1);
 		i++;
 	}
@@ -55,7 +54,7 @@ int	ft_length_checker(t_vec3 axis)
 int	ft_coords_checker(char *coord)
 {
 	char	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	tmp = coord;

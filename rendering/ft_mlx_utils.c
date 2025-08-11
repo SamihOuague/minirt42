@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 21:46:49 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/10 23:56:08 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:25:25 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_minirt_init(char *filename, t_elt *params)
 		perror("open");
 		return (1);
 	}
-	ft_init_scene(fd, &(*params).scene);	
+	ft_init_scene(fd, &(*params).scene);
 	close(fd);
 	if ((*params).scene.error != 0)
 	{
@@ -58,4 +58,3 @@ int	ft_minirt_init(char *filename, t_elt *params)
 	}
 	return (0);
 }
-
