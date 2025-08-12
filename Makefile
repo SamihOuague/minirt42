@@ -6,14 +6,14 @@
 #    By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/06 08:44:02 by souaguen          #+#    #+#              #
-#    Updated: 2025/08/11 04:53:00 by souaguen         ###   ########.fr        #
+#    Updated: 2025/08/11 23:40:23 by souaguen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=gcc
-CFLAGS=-I./libft -I./minilibx-linux -I./ -g 
+CFLAGS=-Wall -Wextra -Werror -I./libft -I./minilibx-linux -I./ -g 
 NAME=minirt
-SRC=parsing/parsing_utils.c \
+SRC=parsing/ft_parsing_utils.c \
     parsing/ft_shapes.c \
     parsing/ft_plan_parsing.c \
     parsing/ft_light_parsing.c \
@@ -26,11 +26,13 @@ SRC=parsing/parsing_utils.c \
     parsing/ft_init.c \
     rendering/ft_sphere_utils.c \
     rendering/ft_cylinder_utils.c \
+    rendering/ft_cylinder_extra.c \
     rendering/ft_plan_utils.c \
     rendering/ft_utils.c \
     rendering/ft_mlx_utils.c \
     rendering/ft_render_utils.c \
     rendering/ft_render.c \
+    rendering/ft_axis_utils.c \
     main.c
 OBJ=$(SRC:.c=.o)
 

@@ -6,13 +6,13 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 04:52:26 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:17:16 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 22:55:18 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	ft_run_loop(t_elt *params, int width, int height)
+void	ft_run_loop(t_elt *params)
 {
 	mlx_put_image_to_window((*params).mlx,
 		(*params).win,

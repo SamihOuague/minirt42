@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:33:13 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:38:52 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 22:23:26 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	ft_camera_parse(char **o, char **d, char *f, t_scene *s)
 	int		error;	
 
 	error = 0;
-	if (ft_coords_float_checker(o)
-		|| ft_coords_float_checker(d)
+	if (ft_coords_float_checker(o) || ft_coords_float_checker(d)
 		|| !ft_isnumeric(f))
 		error = 4;
 	if (!error)
@@ -65,7 +64,6 @@ int	ft_init_camera(char **split, t_scene *scene)
 {
 	char	**origin;
 	char	**direction;
-	char	*fov;
 	int		error;
 
 	if ((*scene).cla[0] > 0)
@@ -75,7 +73,6 @@ int	ft_init_camera(char **split, t_scene *scene)
 		return (2);
 	origin = ft_fast_split(ft_to_space(split[1]));
 	direction = ft_fast_split(ft_to_space(split[2]));
-	fov = split[3];
 	if (origin == NULL
 		|| direction == NULL
 		|| ft_len(origin) != 3
@@ -88,5 +85,5 @@ int	ft_init_camera(char **split, t_scene *scene)
 		free(direction);
 		return (error);
 	}
-	return (ft_camera_parse(origin, direction, fov, scene));
+	return (ft_camera_parse(origin, direction, split[3], scene));
 }

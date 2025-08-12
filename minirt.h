@@ -6,13 +6,13 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 23:29:58 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:17:40 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 03:09:33 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
-# define WIDTH 800
+# define WIDTH 1200
 # define HEIGHT 800
 
 # include "libft.h"
@@ -116,11 +116,11 @@ typedef struct s_elt
 }	t_elt;
 
 t_sphere	ft_sphere(t_vec3 origin, double radius);
-void		ft_run_loop(t_elt *params, int width, int height);
+void		ft_run_loop(t_elt *params);
 void		ft_init_ray(t_ray *ray, t_vec3 dir, t_cam camera);
 void		ft_lookat(t_vec3 matrix[3], t_vec3 forward);
 void		ft_pixel_put(char **data_addr,
-				int x, int y, int s_line, int bpp, int pixel);
+				t_vec3 v, t_elt *params, int pixel);
 void		close_n_clean(t_elt *param);
 void		ft_extract_line(char *line, t_scene *scene);
 void		ft_init_scene(int fd, t_scene *scene);

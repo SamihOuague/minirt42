@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:30:55 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:35:03 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 03:31:12 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,21 @@ int	ft_cylinder_checker(char **split)
 	return (0);
 }
 
-int	ft_cylinder_parse(char **b, char **a, char **s, char **c, t_scene *sc)
+void	ft_cylinder_param_init(t_vec3 *base, t_vec3 *axis,
+		t_vec3 *color, char **params[3])
+{
+	*base = ft_vec3(ft_to_double(params[0][0]),
+			ft_to_double(params[0][1]),
+			ft_to_double(params[0][2]));
+	*axis = ft_vec3(ft_to_double(params[1][0]),
+			ft_to_double(params[1][1]),
+			ft_to_double(params[1][2]));
+	*color = ft_vec3(ft_to_double(params[2][0]),
+			ft_to_double(params[2][1]),
+			ft_to_double(params[2][2]));
+}
+
+int	ft_cylinder_parse(char **params[3], char **s, t_scene *sc)
 {
 	t_vec3	base;
 	t_vec3	axis;
@@ -36,63 +50,50 @@ int	ft_cylinder_parse(char **b, char **a, char **s, char **c, t_scene *sc)
 	int		error;
 
 	error = 0;
-	if (ft_coords_float_checker(b)
-		|| ft_color_checker(c)
-		|| ft_coords_float_checker(a))
+	if (ft_coords_float_checker(params[0])
+		|| ft_color_checker(params[2])
+		|| ft_coords_float_checker(params[1]))
 		error = 4;
 	if (!error)
 	{
-		base = ft_vec3(ft_to_double(b[0]),
-				ft_to_double(b[1]),
-				ft_to_double(b[2]));
-		axis = ft_vec3(ft_to_double(a[0]),
-				ft_to_double(a[1]),
-				ft_to_double(a[2]));
-		color = ft_vec3(ft_to_double(c[0]),
-				ft_to_double(c[1]),
-				ft_to_double(c[2]));
+		ft_cylinder_param_init(&base, &axis, &color, params);
 		size[0] = ft_to_double(s[0]);
-		size[1] = ft_to_double(s[1]);
+		size[1] = ft_to_double(s[1]) / 2;
 		if (size[0] < 0 || size[1] < 0 || ft_length_checker(axis))
 			error = 8;
 		ft_insert_object(ft_create_cylinder(base, axis, size, color), sc);
 	}
-	free(b);
-	free(a);
-	free(c);
+	free(params[0]);
+	free(params[1]);
+	free(params[2]);
 	return (error);
 }
 
-//t_vec3 base, t_vec3 axis, double size[2], t_vec3 color
 int	ft_init_cylinder(char **split, t_scene *scene)
 {
-	char	**base;
-	char	**axis;
-	char	**color;
+	char	**params[3];
 	char	*size[2];
 	int		error;
 
 	if (ft_len(split) != 6 || ft_cylinder_checker(split))
 		return (2);
-	base = ft_fast_split(ft_to_space(split[1]));
-	axis = ft_fast_split(ft_to_space(split[2]));
-	color = ft_fast_split(ft_to_space(split[5]));
-	size[0] = split[3];
-	size[1] = split[4];
-	if (base == NULL
-		|| axis == NULL
-		|| color == NULL
-		|| ft_len(base) != 3
-		|| ft_len(axis) != 3
-		|| ft_len(color) != 3)
+	params[0] = ft_fast_split(ft_to_space(split[1]));
+	params[1] = ft_fast_split(ft_to_space(split[2]));
+	params[2] = ft_fast_split(ft_to_space(split[5]));
+	size[0] = split[4];
+	size[1] = split[3];
+	if (params[0] == NULL || params[1] == NULL || params[2] == NULL
+		|| ft_len(params[0]) != 3
+		|| ft_len(params[1]) != 3
+		|| ft_len(params[2]) != 3)
 	{
 		error = 2;
-		if (base == NULL || color == NULL || axis == NULL)
+		if (params[0] == NULL || params[1] == NULL || params[2] == NULL)
 			error = -1;
-		free(base);
-		free(color);
-		free(axis);
+		free(params[0]);
+		free(params[1]);
+		free(params[2]);
 		return (error);
 	}
-	return (ft_cylinder_parse(base, axis, size, color, scene));
+	return (ft_cylinder_parse(params, size, scene));
 }

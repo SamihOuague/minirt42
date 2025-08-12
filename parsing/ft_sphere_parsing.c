@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:28:35 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:33:30 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 03:24:18 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_sphere_parse(char **origin, char **color, char *radius, t_scene *scene)
 		error = 4;
 	if (!error)
 	{
-		r = ft_to_double(radius);
+		r = ft_to_double(radius) / 2;
 		o = ft_vec3(ft_to_double(origin[0]),
 				ft_to_double(origin[1]),
 				ft_to_double(origin[2]));

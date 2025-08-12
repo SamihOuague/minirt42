@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 16:12:11 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:17:55 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 23:10:36 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ void	ft_create_image(t_elt *params)
 	while (k < size)
 	{
 		ft_pixel_put(&(*params).data_addr,
-			k % (*params).width,
-			(*params).height - 1 - (k / (*params).width),
-			(*params).size_line,
-			(*params).bpp,
-			ft_compute_ray(matrix, k, params));
+			ft_vec3(k % (*params).width,
+				(*params).height - 1 - (k / (*params).width), 0),
+			params, ft_compute_ray(matrix, k, params));
 		k++;
 	}
 }
@@ -67,9 +65,8 @@ void	ft_create_image(t_elt *params)
 int	main(int argc, char **argv)
 {
 	t_elt	params;
-	t_ray	ray;
 
-	params.width = WIDTH;	
+	params.width = WIDTH;
 	params.height = HEIGHT;
 	params.aspect_r = (double)params.width / (double)params.height;
 	if (argc != 2)
@@ -88,6 +85,6 @@ int	main(int argc, char **argv)
 	params.data_addr = mlx_get_data_addr(params.img_ptr,
 			&params.bpp, &params.size_line, &params.endian);
 	ft_create_image(&params);
-	ft_run_loop(&params, params.width, params.height);
+	ft_run_loop(&params);
 	return (0);
 }

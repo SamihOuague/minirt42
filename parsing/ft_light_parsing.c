@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:33:56 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:37:38 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/11 22:26:33 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,14 @@ int	ft_light_parse(char **o, char **c, char *i, t_scene *s)
 	int		error;	
 
 	error = 0;
-	if (ft_coords_float_checker(o)
-		|| ft_coords_float_checker(c)
+	if (ft_coords_float_checker(o) || ft_coords_float_checker(c)
 		|| ft_float_checker(i))
 		error = 4;
 	if (!error)
 	{
-		origin = ft_vec3(ft_to_double(o[0]),
-				ft_to_double(o[1]),
+		origin = ft_vec3(ft_to_double(o[0]), ft_to_double(o[1]),
 				ft_to_double(o[2]));
-		color = ft_vec3(ft_to_double(c[0]),
-				ft_to_double(c[1]),
+		color = ft_vec3(ft_to_double(c[0]), ft_to_double(c[1]),
 				ft_to_double(c[2]));
 		intensity = ft_to_double(i);
 		if (intensity < 0.0f || intensity > 1.0f)
@@ -76,8 +73,7 @@ int	ft_init_light(char **split, t_scene *scene)
 	origin = ft_fast_split(ft_to_space(split[1]));
 	color = ft_fast_split(ft_to_space(split[3]));
 	intensity = split[2];
-	if (origin == NULL
-		|| color == NULL
+	if (origin == NULL || color == NULL
 		|| ft_len(origin) != 3
 		|| ft_len(color) != 3)
 	{
