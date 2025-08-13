@@ -6,13 +6,13 @@
 #    By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/06 08:44:02 by souaguen          #+#    #+#              #
-#    Updated: 2025/08/11 23:40:23 by souaguen         ###   ########.fr        #
+#    Updated: 2025/08/13 02:50:44 by souaguen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC=gcc
+CC=cc
 CFLAGS=-Wall -Wextra -Werror -I./libft -I./minilibx-linux -I./ -g 
-NAME=minirt
+NAME=miniRT
 SRC=parsing/ft_parsing_utils.c \
     parsing/ft_shapes.c \
     parsing/ft_plan_parsing.c \
@@ -39,7 +39,7 @@ OBJ=$(SRC:.c=.o)
 $(NAME): $(OBJ)
 	make -C minilibx-linux
 	make -C ./libft all bonus
-	$(CC) $(OBJ) -g -o $(NAME) -L./libft -l:libft.a -L./minilibx-linux -l:libmlx.a -lmlx -lXext -lX11 -lm
+	$(CC) $(CFLAGS) $(OBJ) -g -o $(NAME) -L./libft -l:libft.a -L./minilibx-linux -l:libmlx.a -lmlx -lXext -lX11 -lm
 
 all: $(NAME)
 

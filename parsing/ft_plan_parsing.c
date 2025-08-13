@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:32:35 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 22:25:26 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:35:02 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_plan_parse(char **a, char **p, char **c, t_scene *sc)
 				ft_to_double(a[2]));
 		color = ft_vec3(ft_to_double(c[0]), ft_to_double(c[1]),
 				ft_to_double(c[2]));
-		if (ft_length_checker(axis))
+		if (ft_length_checker(&axis))
 			error = 8;
 		ft_insert_object(ft_create_plane(axis, point, color), sc);
 	}

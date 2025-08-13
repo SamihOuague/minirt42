@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 04:05:40 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:39:45 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 02:36:57 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int	ft_isnumeric(char *str)
 			return (0);
 		i++;
 	}
+	i = ft_strlen(str);
+	if (i > 3)
+		return (0);
 	return (1);
 }
 
@@ -41,13 +44,15 @@ int	ft_color_checker(char **color)
 	return (0);
 }
 
-int	ft_length_checker(t_vec3 axis)
+int	ft_length_checker(t_vec3 *axis)
 {
-	double	len;
-
-	len = sqrt(ft_dot(axis, axis));
-	if (fabs(len - 1) > 0.01)
+	if (ft_dot(*axis, *axis) == 0)
 		return (1);
+	if (fabs((*axis).x) > 1
+		|| fabs((*axis).y) > 1
+		|| fabs((*axis).z) > 1)
+		return (1);
+	*axis = ft_normalize(*axis);
 	return (0);
 }
 

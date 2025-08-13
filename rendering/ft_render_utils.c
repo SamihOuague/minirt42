@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 04:50:28 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/12 02:55:57 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 02:48:15 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_light(t_ray *ray, t_scene *scene)
 	t_vec3		v;
 	t_vec3		lm;
 	t_vec3		n;
+	t_vec3		i;
 	double		intensity;
 
 	v = ft_sum((*ray).from, ft_product((*ray).direction, (*ray).hit.distance));
@@ -60,14 +61,20 @@ int	ft_light(t_ray *ray, t_scene *scene)
 	n = (*ray).hit.normal;
 	intensity = ft_dot(lm, n);
 	if (intensity < 0 || ft_is_shadow(*ray, (*scene).light.origin,
-			(*scene).shapes))
+			(*scene).shapes) || (*scene).cla[1] == 0)
 		intensity = 0;
-	intensity = (intensity * (*scene).light.intensity) + (*scene).ambient;
-	if (intensity > 1)
-		intensity = 1;
-	return (ft_get_rgb((*ray).hit.pixel.x * intensity,
-			(*ray).hit.pixel.y * intensity,
-			(*ray).hit.pixel.z * intensity));
+	intensity = (intensity * (*scene).light.intensity);
+	i = ft_vec3(intensity + (*scene).ambient * ((*scene).color.x / 255.0f),
+			intensity + (*scene).ambient * ((*scene).color.y / 255.0f),
+			intensity + (*scene).ambient * ((*scene).color.z / 255.0f));
+	if (i.x > 1)
+		i.x = 1;
+	if (i.y > 1)
+		i.y = 1;
+	if (i.z > 1)
+		i.z = 1;
+	return (ft_get_rgb((*ray).hit.pixel.x * i.x,
+			(*ray).hit.pixel.y * i.y, (*ray).hit.pixel.z * i.z));
 }
 
 int	ft_has_intersection(t_list *shapes, t_ray *ray, void *exclude)
@@ -78,6 +85,7 @@ int	ft_has_intersection(t_list *shapes, t_ray *ray, void *exclude)
 
 	cursor = shapes;
 	hit.distance = 10000;
+	(*ray).from = ft_sum((*ray).from, ft_product((*ray).direction, 1e-6f));
 	while (cursor != NULL)
 	{
 		content = (*cursor).content;
@@ -93,8 +101,5 @@ int	ft_has_intersection(t_list *shapes, t_ray *ray, void *exclude)
 		}
 		cursor = (*cursor).next;
 	}
-	(*ray).hit = hit;
-	if (hit.distance < 10000 && hit.distance > 0)
-		return (1);
-	return (0);
+	return (ft_set_hit(hit, ray));
 }

@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 21:46:49 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:25:25 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 02:43:15 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 void	close_n_clean(t_elt *param)
 {
 	ft_lstclear(&(*param).scene.shapes, &ft_free_content);
-	mlx_clear_window((*param).mlx, (*param).win);
-	mlx_destroy_image((*param).mlx, (*param).img_ptr);
-	mlx_clear_window((*param).mlx, (*param).win);
-	mlx_destroy_window((*param).mlx, (*param).win);
+	if ((*param).img_ptr != NULL)
+		mlx_destroy_image((*param).mlx, (*param).img_ptr);
+	if ((*param).win != NULL)
+	{
+		mlx_clear_window((*param).mlx, (*param).win);
+		mlx_destroy_window((*param).mlx, (*param).win);
+	}
 	mlx_destroy_display((*param).mlx);
 	free((*param).mlx);
 	exit(0);
@@ -37,6 +40,25 @@ int	key_hook_ptr(int key, t_elt *param)
 	return (3);
 }
 
+void	ft_create_image(t_elt *params)
+{
+	t_vec3	matrix[3];
+	int		k;
+	int		size;
+
+	k = 0;
+	size = (*params).width * (*params).height;
+	ft_lookat(matrix, (*params).scene.camera.direction);
+	while (k < size)
+	{
+		ft_pixel_put(&(*params).data_addr,
+			ft_vec3(k % (*params).width,
+				(*params).height - 1 - (k / (*params).width), 0),
+			params, ft_compute_ray(matrix, k, params));
+		k++;
+	}
+}
+
 int	ft_minirt_init(char *filename, t_elt *params)
 {
 	int		fd;
@@ -52,7 +74,7 @@ int	ft_minirt_init(char *filename, t_elt *params)
 	close(fd);
 	if ((*params).scene.error != 0)
 	{
-		printf("Error code %d\n", (*params).scene.error);
+		printf("Error: bad config\n");
 		ft_lstclear(&(*params).scene.shapes, &ft_free_content);
 		return (1);
 	}

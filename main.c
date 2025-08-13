@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 16:12:11 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 23:10:36 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 02:36:32 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,44 @@ int	ft_compute_ray(t_vec3 matrix[3], int k, t_elt *params)
 	return (pixel);
 }
 
-void	ft_create_image(t_elt *params)
+int	ft_error_checker(char *filename, t_elt *params)
 {
-	t_vec3	matrix[3];
-	int		k;
-	int		size;
+	char	*dot;
 
-	k = 0;
-	size = (*params).width * (*params).height;
-	ft_lookat(matrix, (*params).scene.camera.direction);
-	while (k < size)
+	dot = ft_strrchr(filename, '.');
+	if (dot == NULL || ft_strncmp(".rt", dot, 4) != 0)
 	{
-		ft_pixel_put(&(*params).data_addr,
-			ft_vec3(k % (*params).width,
-				(*params).height - 1 - (k / (*params).width), 0),
-			params, ft_compute_ray(matrix, k, params));
-		k++;
+		printf("Error : bad file format\n");
+		return (1);
 	}
+	if (ft_minirt_init(filename, params))
+		return (1);
+	if ((*params).scene.cla[0] == 0)
+	{
+		printf("Error : camera not detected\n");
+		return (1);
+	}
+	(*params).mlx = mlx_init();
+	if ((*params).mlx == NULL)
+	{
+		printf("Error : mlx init failed\n");
+		return (1);
+	}
+	return (0);
+}
+
+void	run(t_elt *params)
+{
+	(*params).win = mlx_new_window((*params).mlx,
+			(*params).width, (*params).height, "MiniRT");
+	(*params).img_ptr = mlx_new_image((*params).mlx,
+			(*params).width, (*params).height);
+	if ((*params).win == NULL || (*params).img_ptr == NULL)
+		close_n_clean(params);
+	(*params).data_addr = mlx_get_data_addr((*params).img_ptr,
+			&(*params).bpp, &(*params).size_line, &(*params).endian);
+	ft_create_image(params);
+	ft_run_loop(params);
 }
 
 int	main(int argc, char **argv)
@@ -68,23 +89,20 @@ int	main(int argc, char **argv)
 
 	params.width = WIDTH;
 	params.height = HEIGHT;
+	params.scene.shapes = NULL;
+	if (params.width <= 0 || params.height <= 0)
+		return (1);
 	params.aspect_r = (double)params.width / (double)params.height;
 	if (argc != 2)
+	{
+		printf("Usage: ./miniRT scene.rt");
 		return (1);
-	else if (ft_minirt_init(argv[1], &params))
-		return (1);
-	params.mlx = mlx_init();
-	if (params.mlx == NULL)
+	}
+	if (ft_error_checker(argv[1], &params))
 	{
 		ft_lstclear(&params.scene.shapes, &ft_free_content);
 		return (1);
 	}
-	params.win = mlx_new_window(params.mlx,
-			params.width, params.height, "MiniRT");
-	params.img_ptr = mlx_new_image(params.mlx, params.width, params.height);
-	params.data_addr = mlx_get_data_addr(params.img_ptr,
-			&params.bpp, &params.size_line, &params.endian);
-	ft_create_image(&params);
-	ft_run_loop(&params);
+	run(&params);
 	return (0);
 }

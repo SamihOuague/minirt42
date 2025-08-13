@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:33:13 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 22:23:26 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:41:50 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_camera_parse(char **o, char **d, char *f, t_scene *s)
 				ft_to_double(d[1]),
 				ft_to_double(d[2]));
 		fov = ft_atoi(f);
-		if (fov < 0 || ft_length_checker(direction))
+		if (ft_length_checker(&direction) || (fov <= 0 || fov > 180))
 			error = 8;
 		ft_set_camera(origin, direction, fov, s);
 	}

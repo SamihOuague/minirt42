@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   ft_parsing_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 21:51:39 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 03:51:22 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 23:55:52 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,21 @@ char	**ft_fast_split(char *str)
 
 double	ft_to_double(char *nbr)
 {
-	double	right;	
+	double	right;
 	long	left;
-	char	*dot;
+	char	*dot;	
+	int		n;
 
+	n = (*nbr) == '-';
 	dot = ft_strchr(nbr, '.');
 	if (dot == NULL)
 		return ((double)ft_atoi(nbr));
-	left = ft_atoi(nbr);
+	left = ft_atoi(nbr + n);
 	right = ft_atoi(dot + 1);
 	while (right >= 1)
 		right = right / 10;
 	right = ((double)left) + right;
-	if (!ft_strncmp(nbr, "-0", 2))
+	if (n)
 		right *= -1;
 	return (right);
 }

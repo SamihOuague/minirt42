@@ -6,7 +6,7 @@
 /*   By: souaguen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 04:50:38 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:23:26 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 02:41:47 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,38 @@ int	ft_sphere_normal(t_sphere sphere, t_ray *ray)
 	return (1);
 }
 
+t_vec3	ft_equation(t_sphere s, t_ray *ray)
+{
+	t_vec3	equation;
+	t_vec3	tmp;
+
+	tmp = ft_sub((*ray).from, s.origin);
+	equation.x = ft_dot((*ray).direction, (*ray).direction);
+	equation.y = 2 * ft_dot((*ray).direction, tmp);
+	equation.z = ft_dot(tmp, tmp) - pow(s.radius, 2);
+	return (equation);
+}
+
 int	ft_sphere_intersection(void *sphere, t_ray *ray)
 {
 	t_sphere	s;
 	t_vec3		equation;
 	double		dis;
 	double		t[2];
-	t_vec3		tmp;
 
 	s = *(t_sphere *)sphere;
-	tmp = ft_sub((*ray).from, s.origin);
-	equation.x = ft_dot((*ray).direction, (*ray).direction);
-	equation.y = 2 * ft_dot((*ray).direction, tmp);
-	equation.z = ft_dot(tmp, tmp) - pow(s.radius, 2);
+	equation = ft_equation(s, ray);
 	dis = pow(equation.y, 2) - 4 * (equation.x * equation.z);
 	if (dis < 0)
 		return (0);
 	t[0] = -equation.y / (2 * equation.x);
-	t[1] = t[0];
 	if (dis > 0)
 		dis = sqrt(dis);
 	t[0] = (-equation.y + dis) / (2 * equation.x);
 	t[1] = (-equation.y - dis) / (2 * equation.x);
-	if (t[0] > t[1])
+	if (t[0] < 0 && t[1] < 0)
+		return (0);
+	if (t[0] > t[1] && t[1] > 0)
 		t[0] = t[1];
 	(*ray).hit.distance = t[0];
 	(*ray).hit.shape_addr = sphere;

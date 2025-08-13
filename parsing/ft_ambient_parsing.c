@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:34:43 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:36:32 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 01:35:21 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_ambient_parse(char *i, char **c, t_scene *s)
 	int		error;	
 
 	error = 0;
-	if (ft_coords_float_checker(c) || ft_float_checker(i))
+	if (ft_color_checker(c) || ft_float_checker(i))
 		error = 4;
 	if (!error)
 	{

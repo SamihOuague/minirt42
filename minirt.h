@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 23:29:58 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/12 03:09:33 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 02:48:55 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,15 @@ void		ft_shape_init(t_shape **shape,
 				void *obj,
 				t_vec3 color,
 				void (f)(t_shape **));
+void		ft_create_image(t_elt *params);
 double		ft_radian(double angle);
 double		ft_to_double(char *nbr);
 double		ft_dot(t_vec3 a, t_vec3 b);
 char		*ft_to_space(char *str);
 char		*get_next_line(int fd);
 char		**ft_fast_split(char *str);
+int			ft_set_hit(t_hitpoint hit, t_ray *ray);
+int			ft_compute_ray(t_vec3 matrix[3], int k, t_elt *params);
 int			ft_get_rgb(int r, int g, int b);
 int			ft_is_shadow(t_ray ray, t_vec3 light, t_list *shapes);
 int			ft_light(t_ray *ray, t_scene *scene);
@@ -155,7 +158,7 @@ int			ft_color_checker(char **split);
 int			ft_float_checker(char *nbr);
 int			ft_init_elements(char **split, t_scene *scene);
 int			ft_len(char **split);
-int			ft_length_checker(t_vec3 axis);
+int			ft_length_checker(t_vec3 *axis);
 int			ft_isnumeric(char *str);
 int			ft_init_camera(char **split, t_scene *scene);
 int			ft_init_light(char **split, t_scene *scene);

@@ -6,7 +6,7 @@
 /*   By: souaguen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 05:44:26 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/11 20:25:54 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 23:27:35 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_plane_intersection(void *plane, t_ray *ray)
 	d = num / den;
 	(*ray).hit.distance = d;
 	(*ray).hit.normal = ft_normalize(pl.direction);
+	if (ft_dot((*ray).direction, (*ray).hit.normal) > 0)
+		(*ray).hit.normal = ft_product((*ray).hit.normal, -1);
 	(*ray).hit.shape_addr = plane;
 	return (1);
 }

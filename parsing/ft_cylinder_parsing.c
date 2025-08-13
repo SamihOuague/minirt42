@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 03:30:55 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/12 03:31:12 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:35:20 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_cylinder_parse(char **params[3], char **s, t_scene *sc)
 		ft_cylinder_param_init(&base, &axis, &color, params);
 		size[0] = ft_to_double(s[0]);
 		size[1] = ft_to_double(s[1]) / 2;
-		if (size[0] < 0 || size[1] < 0 || ft_length_checker(axis))
+		if (size[0] < 0 || size[1] < 0 || ft_length_checker(&axis))
 			error = 8;
 		ft_insert_object(ft_create_cylinder(base, axis, size, color), sc);
 	}
