@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 04:35:48 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/10 04:36:34 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 23:05:03 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_extract_line(char *line, t_scene *scene)
 	size = ft_len(split);
 	if (size > 6 || size < 3)
 	{
+		(*scene).error = ft_len(split) != 0;
 		free(split);
 		return ;
 	}

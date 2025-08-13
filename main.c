@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 16:12:11 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/13 02:36:32 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/13 18:59:04 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_error_checker(char *filename, t_elt *params)
 	char	*dot;
 
 	dot = ft_strrchr(filename, '.');
-	if (dot == NULL || ft_strncmp(".rt", dot, 4) != 0)
+	if (dot == NULL || ft_strncmp(".rt", dot, 4) != 0 || dot == filename)
 	{
 		printf("Error : bad file format\n");
 		return (1);
