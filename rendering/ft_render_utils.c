@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 04:50:28 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/13 17:48:53 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/16 21:03:17 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ int	ft_has_intersection(t_list *shapes, t_ray *ray, void *exclude)
 	t_list		*cursor;
 	t_shape		*content;
 
+	(void) exclude;
 	cursor = shapes;
 	hit.distance = 10000;
 	(*ray).from = ft_sum((*ray).from, ft_product((*ray).direction, 1e-6));
 	while (cursor != NULL)
 	{
 		content = (*cursor).content;
-		if ((*content).object != exclude
-			&& (*content).has_inter((*content).object, ray)
+		if ((*content).has_inter((*content).object, ray)
 			&& (*ray).hit.distance > 0)
 		{
 			if ((*ray).hit.distance < hit.distance)

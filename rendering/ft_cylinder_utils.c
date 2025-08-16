@@ -6,7 +6,7 @@
 /*   By: souaguen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 05:07:00 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/12 02:57:21 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/16 23:06:05 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_caps_intersection(t_cylinder cy, t_ray *ray)
 	double	den;
 	double	num;
 	double	d[2];
-
+	
 	c_top = ft_sum(cy.origin, ft_product(cy.axis, cy.height));
 	den = ft_dot(cy.axis, (*ray).direction);
 	if (fabs(den) <= 0.001f)
@@ -45,13 +45,21 @@ int	ft_caps_intersection(t_cylinder cy, t_ray *ray)
 	hit = ft_sub(ft_product((*ray).direction, d[0]), c_top);
 	(*ray).hit.distance = d[0];
 	(*ray).hit.normal = cy.axis;
-	if (ft_dot(hit, hit) < pow(cy.radius, 2) && d[0] > 0 && d[0] <= d[1])
+	if (ft_dot(hit, hit) < pow(cy.radius, 2) && d[0] > 0)
+	{
+		if (ft_dot((*ray).direction, (*ray).hit.normal) > 0)
+			(*ray).hit.normal = ft_product((*ray).hit.normal, -1);
 		return (1);
+	}
 	hit = ft_sub(ft_product((*ray).direction, d[1]), cy.origin);
-	(*ray).hit.normal = ft_product(cy.axis, -1);
+	(*ray).hit.normal = cy.axis;
 	(*ray).hit.distance = d[1];
 	if (ft_dot(hit, hit) < pow(cy.radius, 2) && d[1] > 0)
+	{
+		if (ft_dot((*ray).direction, (*ray).hit.normal) > 0)
+			(*ray).hit.normal = ft_product((*ray).hit.normal, -1);
 		return (1);
+	}
 	return (0);
 }
 
@@ -80,8 +88,12 @@ int	ft_cylinder_intersection(void *cylinder, t_ray *ray)
 	(*ray).hit.shape_addr = cylinder;
 	if (equation.z < 0 || equation.x == 0)
 		return (ft_caps_intersection(cy, ray));
-	t[0] = (equation.y - sqrt(equation.z)) / equation.x;
-	t[1] = (equation.y + sqrt(equation.z)) / equation.x;
+	t[0] = (equation.y + sqrt(equation.z)) / equation.x;
+	t[1] = (equation.y - sqrt(equation.z)) / equation.x;
+	if (t[0] < 0 && t[1] < 0)
+		return (ft_caps_intersection(cy, ray));
+	if (t[0] > t[1] && t[1] > 0)
+		t[0] = t[1];
 	t[1] = ft_dot(cy.axis,
 			ft_sub(ft_product((*ray).direction, t[0]), cy.origin));
 	if (t[1] <= 0 || t[1] >= cy.height)
