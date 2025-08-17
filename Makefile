@@ -6,12 +6,12 @@
 #    By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/06 08:44:02 by souaguen          #+#    #+#              #
-#    Updated: 2025/08/13 02:50:44 by souaguen         ###   ########.fr        #
+#    Updated: 2025/08/17 22:32:23 by souaguen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -I./libft -I./minilibx-linux -I./ -g 
+CFLAGS=-Wall -Wextra -Werror -I./libft -I./minilibx-linux -I./ 
 NAME=miniRT
 SRC=parsing/ft_parsing_utils.c \
     parsing/ft_shapes.c \
@@ -44,7 +44,8 @@ $(NAME): $(OBJ)
 all: $(NAME)
 
 clean:
-	make -C ./libft clean
+	make -C ./libft clean	
+	make -C ./minilibx-linux clean
 	rm -f $(OBJ)
 
 fclean: clean

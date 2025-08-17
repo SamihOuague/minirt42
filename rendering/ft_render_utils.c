@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 04:50:28 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/16 21:03:17 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/17 22:20:00 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ int	ft_is_shadow(t_ray ray, t_vec3 light, t_list *shapes)
 	double	light_d;
 
 	hit = ft_sum(ray.from, ft_product(ray.direction, ray.hit.distance));
+	light = ft_sum(light, ft_product(ray.direction, 1e-6));
 	shadow.direction = ft_normalize(ft_sub(light, hit));
 	shadow.from = hit;
 	light = ft_sub(light, hit);
 	light_d = sqrt(ft_dot(light, light));
 	if (ft_has_intersection(shapes, &shadow, ray.hit.shape_addr)
-		&& light_d > shadow.hit.distance)
+		&& light_d > shadow.hit.distance
+		&& shadow.hit.shape_addr != ray.hit.shape_addr)
 		return (1);
 	return (0);
 }

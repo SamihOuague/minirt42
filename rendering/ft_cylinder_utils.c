@@ -6,7 +6,7 @@
 /*   By: souaguen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 05:07:00 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/16 23:06:05 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/17 22:21:51 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,6 @@ int	ft_cy_normal(t_cylinder cy, t_ray *ray)
 	normal = ft_product(normal, 1.0f / sqrt(ft_dot(normal, normal)));
 	(*ray).hit.normal = normal;
 	return (1);
-}
-
-int	ft_caps_intersection(t_cylinder cy, t_ray *ray)
-{
-	t_vec3	c_top;
-	t_vec3	hit;
-	double	den;
-	double	num;
-	double	d[2];
-	
-	c_top = ft_sum(cy.origin, ft_product(cy.axis, cy.height));
-	den = ft_dot(cy.axis, (*ray).direction);
-	if (fabs(den) <= 0.001f)
-		return (0);
-	num = ft_dot(cy.axis, c_top);
-	d[0] = num / den;
-	num = ft_dot(cy.axis, cy.origin);
-	d[1] = num / den;
-	hit = ft_sub(ft_product((*ray).direction, d[0]), c_top);
-	(*ray).hit.distance = d[0];
-	(*ray).hit.normal = cy.axis;
-	if (ft_dot(hit, hit) < pow(cy.radius, 2) && d[0] > 0)
-	{
-		if (ft_dot((*ray).direction, (*ray).hit.normal) > 0)
-			(*ray).hit.normal = ft_product((*ray).hit.normal, -1);
-		return (1);
-	}
-	hit = ft_sub(ft_product((*ray).direction, d[1]), cy.origin);
-	(*ray).hit.normal = cy.axis;
-	(*ray).hit.distance = d[1];
-	if (ft_dot(hit, hit) < pow(cy.radius, 2) && d[1] > 0)
-	{
-		if (ft_dot((*ray).direction, (*ray).hit.normal) > 0)
-			(*ray).hit.normal = ft_product((*ray).hit.normal, -1);
-		return (1);
-	}
-	return (0);
 }
 
 void	ft_cylinder_vars_init(t_cylinder *cy, t_vec3 *cross_d,

@@ -6,7 +6,7 @@
 /*   By: souaguen <souaguen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 23:29:58 by souaguen          #+#    #+#             */
-/*   Updated: 2025/08/13 02:48:55 by souaguen         ###   ########.fr       */
+/*   Updated: 2025/08/17 22:22:42 by souaguen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ double		ft_dot(t_vec3 a, t_vec3 b);
 char		*ft_to_space(char *str);
 char		*get_next_line(int fd);
 char		**ft_fast_split(char *str);
+int			ft_caps_intersection(t_cylinder cy, t_ray *ray);
 int			ft_set_hit(t_hitpoint hit, t_ray *ray);
 int			ft_compute_ray(t_vec3 matrix[3], int k, t_elt *params);
 int			ft_get_rgb(int r, int g, int b);
